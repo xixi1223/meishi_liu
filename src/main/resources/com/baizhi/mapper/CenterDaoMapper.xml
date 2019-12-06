@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.CenterDao">
+    <select id="count" resultType="java.lang.Integer">
+        select count(id) from cu_center where menuid=#{menuid};
+    </select>
+    <select id="queryById" resultType="Menu">
+        select m.id, m.name from cu_center c LEFT JOIN cu_menu m on c.menuid=m.id
+        LEFT JOIN cu_user u on c.userid=u.id
+        where u.id=#{userid};
+    </select>
+    <delete id="delete">
+        delete cu_center where menuid= #{menuid};
+    </delete>
+    <select id="queryAll" resultType="Center">
+        select id,userid,menuid from cu_center
+    </select>
+    <select id="queryByCaipuId" resultType="Center">
+        select id,userid,menuid from cu_center where menuid=#{menuid} and userid=#{userid}
+    </select>
+    <insert id="insertCen">
+        insert into cu_center values(null,#{userid},#{menuid})
+    </insert>
+</mapper>

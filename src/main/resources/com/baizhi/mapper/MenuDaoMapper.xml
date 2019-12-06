@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.MenuDao">
+    <select id="queryAllById" resultType="Menu">
+        select id,name,gongyi,pic,intro,greenid,rcount
+        from cu_menu where greenid=#{id}
+    </select>
+    <insert id="add">
+      insert into cu_menu values (#{id},#{name},#{gongyi},#{pic},#{intro},#{greenid})
+    </insert>
+    <update id="update">
+        update cu_menu set name=#{name},gongyi=#{gongyi},pic=#{pic},
+        intro=#{intro},greenid=#{greenid} where id=#{id}
+    </update>
+    <delete id="delete">
+        delete from cu_menu where id=#{id}
+    </delete>
+    
+    <resultMap id="menuMap" type="Menu">
+        <id column="mid" property="id"></id>
+        <result column="mname" property="name"></result>
+        <result column="mpic" property="pic"></result>
+        <result column="mgongyi" property="gongyi"></result>
+        <result column="mintro" property="intro"></result>
+        <result column="mrcount" property="rcount"></result>
+
+        <association property="green" javaType="Green">
+            <id column="gid" property="id"></id>
+            <result column="gname" property="name"></result>
+        </association>
+        <collection property="food" ofType="Food">
+            <id column="fid" property="id"></id>
+            <result column="fname" property="name"></result>
+        </collection>
+    </resultMap>
+    <select id="queryAll" resultMap="menuMap">
+        select m.id as mid,m.name as mname,
+        m.pic as mpic,m.gongyi as mgongyi,m.intro as mintro,m.rcount as mrcount,
+        v.id as vid,f.id as fid,f.name as fname,
+        g.id as gid,g.name as gname
+		from cu_menu m LEFT JOIN cu_foodmenu v on m.id=v.menuid
+        LEFT JOIN cu_food f on f.id= v.foodid
+        LEFT JOIN cu_green g on g.id=m.greenid
+    </select>
+    <select id="queryById" resultMap="menuMap">
+      select m.id as mid,m.name as mname,
+        m.pic as mpic,m.gongyi as mgongyi,m.intro as mintro,m.rcount as mrcount,
+        v.id as vid,f.id as fid,f.name as fname,
+        g.id as gid,g.name as gname
+		from cu_menu m LEFT JOIN cu_foodmenu v on m.id=v.menuid
+        LEFT JOIN cu_food f on f.id= v.foodid
+        LEFT JOIN cu_green g on g.id=m.greenid
+        where m.id=#{id}
+    </select>
+    <update id="updateCount">
+        update cu_menu set rcount=#{count} where id=#{menuid}
+    </update>
+
+
+</mapper>
