@@ -2,6 +2,7 @@ package com.baizhi.test;
 
 import com.baizhi.entity.User;
 import com.baizhi.service.CenterService;
+import com.baizhi.service.FoodService;
 import com.baizhi.service.MenuService;
 import com.baizhi.service.UserService;
 import org.junit.Test;
@@ -17,11 +18,19 @@ public class UserServiceTest extends BaseTset {
     private MenuService menuService;
     @Autowired
     private CenterService centerService;
+    @Autowired
+    private FoodService foodService;
 
     @Test
     public void test1(){
         User user =userService.find("小三","123456");
         System.out.println(user);
+    }
+    //添加食材
+    @Test
+    public void test2(){
+        foodService.addFood("哈哈哈");
+        System.out.println("添加成功！");
     }
 
 }
