@@ -32,5 +32,11 @@ public class UserServiceTest extends BaseTset {
         foodService.addFood("嘿嘿黑");
         System.out.println("添加成功！");
     }
+    //更新数量
+    @Test
+    public void test3(){
+        menuService.upCOunt(55,1);
+        System.out.println("更新成功！");
+    }
 
 }
