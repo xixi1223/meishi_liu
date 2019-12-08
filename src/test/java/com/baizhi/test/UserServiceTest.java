@@ -29,7 +29,7 @@ public class UserServiceTest extends BaseTset {
     //添加食材
     @Test
     public void test2(){
-        foodService.addFood("哈哈哈");
+        foodService.addFood("嘿嘿黑");
         System.out.println("添加成功！");
     }
 
